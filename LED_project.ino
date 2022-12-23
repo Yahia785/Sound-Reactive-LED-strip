@@ -11,8 +11,6 @@
 //Global Variables
 CRGB leds[NUM_LEDS];              //Defining array of leds
 int mic_data_A = 0;               //Variable that stores analog reading from sound sensor
-//int count = 1;                    //Counter variable
-int count_b = 0;                  //Counter variable
 
 typedef enum {BRIGHTNESS_REACTIVE, LINEAR_REACTIVE} LEDstates; //Declares states of FSM
 LEDstates state = LINEAR_REACTIVE;                             //Declaring our initial state
@@ -54,7 +52,6 @@ void loop()
       case BRIGHTNESS_REACTIVE: 
         brightness_reactive(index); //Brightness reactive animation
         break;
-
     }
   }
 
@@ -213,7 +210,6 @@ void green(int index)
 //Function responsible for lighting the first set of leds as blue, second set as green and last set as red
 void red(int index)
 {
-static int count  = 0;
   if (index >= 80)
   {
     for (int i = 80; i < index; i++)
@@ -226,7 +222,6 @@ static int count  = 0;
     }
   }
 
-
   if (index >= 90)
   {
     for (int i = 80; i < index; i++)
@@ -237,14 +232,5 @@ static int count  = 0;
       control_leds(i, NUM_LEDS - i, CRGB::Black);
       FastLED.show();
     }
-  count++;
-  Serial.println(count);
   }
-   //When counter variable reaches 500 we switch to brightness reactive mode 
-
-  if (count == 500)
-  {
-    state = BRIGHTNESS_REACTIVE;
-  }
-
 }
