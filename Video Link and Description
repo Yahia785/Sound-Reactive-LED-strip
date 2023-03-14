@@ -1,0 +1,14 @@
+This is a personal project for programming an LED strip using arduino board. The LED strip is now sound reactive and can react to music. 
+A sound sensor is used to read data and the animation is based upon the values that the sound sensor measures. Note that the sound sensor
+is a cheap one so it is not really reliable. Sometimes the animation may be inconsistent with the sound due to inconsistency from the sound-
+sensor's reading. 
+There are two modes of animation. First one is brightness reactive where every time the measurement from the sound sensor is greater than a 
+specific treshold, the LED's make an animation by increasing their brightness and decreasing the brightness again over a really short period. 
+This appears as a really fast flash. Thus, the flashing should be occuring over the music's beat. When the song is upbeat, there should be more
+flashing than when the song is steady.
+The second mode is linear reactive. The linear reactive animation mode also relies on the beat. However, the animation is different here. If the 
+room is quiet then all of the LEDs are off. If there is a sound with low treshold some of the LEDs light up from the left side. If there is a sound
+with higher treshold then more LEDs will light up from the left side. If the animation color is blue then the sound is in low range. If the animation 
+color is green then the sound is in mid range. If the animation color is red then the sound is in high range. If the song is upbeat then most of the LEDs
+should be on and expecting red or green colors. If the beat is steady and there is not a lot of changes in the song's structure then less LEDs are expected
+to be on with more of blue and some green colors. 
