@@ -11,6 +11,7 @@
 //Global Variables
 CRGB leds[NUM_LEDS];              //Defining array of leds
 int mic_data_A = 0;               //Variable that stores analog reading from sound sensor
+int count = 0;
 
 typedef enum {BRIGHTNESS_REACTIVE, LINEAR_REACTIVE} LEDstates; //Declares states of FSM
 LEDstates state = LINEAR_REACTIVE;                             //Declaring our initial state
@@ -43,6 +44,8 @@ void loop()
     //Subtracting lowest reading for a quiet room from current reading of sound sensor. 
     int index = mic_data_B - LOWEST;
 
+    Serial.println(index);
+    
     switch (state)
     {
       case LINEAR_REACTIVE:
@@ -88,11 +91,11 @@ void rgb()
 void brightness_reactive(int index)
 {
   rgb(); //function that sets the LED strip to three seperatee colors red green and blue.
-  if (index >= 20)
+  if (index >= 30)
   {
     FastLED.setBrightness(240);
   }
-  if (index >= 200)
+  if (index >= 700)
   {
     control_leds(30, 40, CRGB::White);
     control_leds(65, 75, CRGB::White);
@@ -104,7 +107,7 @@ void brightness_reactive(int index)
   control_leds(30, 40, CRGB::Black);
   control_leds(65, 75, CRGB::Black);
   FastLED.show();
-  //Serial.println(index);
+  
 }
 
 /* Linear reactive animation. When the sound sensor's treshold goes between 12 and 40 a set of leds are on 
@@ -161,24 +164,13 @@ void blue(int index)
 //Function responsible for lighting first set of leds as blue and second set as green
 void green(int index)
 {
-  if (index >= 20)
+  if (index >= 40)
   {
     for (int i = 40; i < index; i++)
     {
       control_leds(0, 40, CRGB::Green);
       control_leds(40, i, CRGB::Blue); //Note the color green is defined as blue by mistake in fastLED library
       control_leds(i, NUM_LEDS - i, CRGB::Black); 
-      FastLED.show();
-    }
-  }
-
-  if (index >= 45)
-  {
-    for (int i = 40; i < index; i++)
-    {
-      control_leds(0, 40, CRGB::Green);
-      control_leds(40, i, CRGB::Blue);
-      control_leds(i, NUM_LEDS - i, CRGB::Black);
       FastLED.show();
     }
   }
@@ -194,8 +186,19 @@ void green(int index)
     }
   }
 
+  if (index >= 90)
+  {
+    for (int i = 40; i < index; i++)
+    {
+      control_leds(0, 40, CRGB::Green);
+      control_leds(40, i, CRGB::Blue);
+      control_leds(i, NUM_LEDS - i, CRGB::Black);
+      FastLED.show();
+    }
+  }
 
-  if (index >= 70)
+
+  if (index >= 110)
   {
     for (int i = 40; i < index; i++)
     {
@@ -210,7 +213,7 @@ void green(int index)
 //Function responsible for lighting the first set of leds as blue, second set as green and last set as red
 void red(int index)
 {
-  if (index >= 80)
+  if (index >= 250)
   {
     for (int i = 80; i < index; i++)
     {
@@ -222,7 +225,7 @@ void red(int index)
     }
   }
 
-  if (index >= 90)
+  if (index >= 400)
   {
     for (int i = 80; i < index; i++)
     {
